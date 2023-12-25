@@ -1,2 +1,11 @@
-<p>example-auth works!</p>
-<p>Authentication with JWT completed</p>
+<div class="d-flex justify-content-center">
+    <div class="row p-3">
+        <p class="col-4">Authentication with JWT</p>
+        <p class="col-4">Log in to see content</p>
+        <div class="col-4">
+            <button class="btn btn-lg btn-outline-primary" (click)="open()">Log in</button>
+        </div>
+    </div>
+</div>
+
+<app-login #login_modal (outLoginData)="receiveLoginData($event)"></app-login>
