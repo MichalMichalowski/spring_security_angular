@@ -8,43 +8,24 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Arrays;
 
 @Configuration
 @EnableWebMvc
-public class AppConfiguration {
-
-    @Bean
-    public FilterRegistrationBean corsFilter() {
-        UrlBasedCorsConfigurationSource src = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration configuration = new CorsConfiguration();
-
-
-        configuration.setAllowCredentials(true);
-        configuration.addAllowedOrigin("http://localhost:4200");
-
-        configuration.setAllowedHeaders(
-                Arrays.asList(
-                        HttpHeaders.AUTHORIZATION,
-                        HttpHeaders.CONTENT_TYPE,
-                        HttpHeaders.ACCEPT
-                )
-        );
-        configuration.setAllowedMethods(
-                Arrays.asList(
-                        HttpMethod.GET.name(),
-                        HttpMethod.POST.name(),
-                        HttpMethod.PUT.name(),
-                        HttpMethod.DELETE.name()
-                )
-        );
-        configuration.setMaxAge(3600L);
-        src.registerCorsConfiguration("/**", configuration);
-
-        FilterRegistrationBean registrationBean = new FilterRegistrationBean(new CorsFilter(src));
-        registrationBean.setOrder(-102);
-        return registrationBean;
+public class AppConfiguration implements WebMvcConfigurer {
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:4200")
+                .allowedMethods(HttpMethod.GET.name(), HttpMethod.POST.name(),
+                        HttpMethod.PUT.name(), HttpMethod.DELETE.name())
+                .allowedHeaders(HttpHeaders.AUTHORIZATION, HttpHeaders.CONTENT_TYPE,
+                        HttpHeaders.ACCEPT)
+                .allowCredentials(true)
+                .maxAge(3600);
     }
 }

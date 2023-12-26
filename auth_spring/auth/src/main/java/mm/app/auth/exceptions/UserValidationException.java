@@ -10,6 +10,6 @@ public class UserValidationException extends RuntimeException {
 
     public UserValidationException(String message, HttpStatus exceptionStatus) {
         super(message);
-        this.exceptionStatus = exceptionStatus
+        this.exceptionStatus = exceptionStatus;
     }
 }

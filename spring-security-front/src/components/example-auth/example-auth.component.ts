@@ -3,6 +3,7 @@ import { DataService } from '../../services/data.service';
 import { LoginComponent } from '../login/login.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LoginData } from 'src/models/login-data';
+import { AuthenticationService } from 'src/services/authentication.service';
 
 @Component({
   selector: 'app-example-auth',
@@ -15,7 +16,9 @@ export class ExampleAuthComponent implements OnInit {
 
   data?: string[];
 
-  constructor (private dataService: DataService, private modalService: NgbModal) {}
+  constructor (private dataService: DataService,
+              private modalService: NgbModal,
+              private authService: AuthenticationService) {}
 
   ngOnInit(): void {
     this.dataService.getImportantData().then( d => {
@@ -29,6 +32,7 @@ export class ExampleAuthComponent implements OnInit {
 
   public receiveLoginData(data: LoginData) {
     console.log(data);
+    this.authService.postLogInData(data);
   }
 
 }
