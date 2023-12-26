@@ -44,6 +44,7 @@ export class ExampleAuthComponent implements OnInit {
 
   public receiveSignUpData(data: SignUpData) {
     console.log(data);
+    this.authService.postSignUpData(data);
   }
 
 }

@@ -1,6 +1,7 @@
 package mm.app.auth.services;
 
 import lombok.RequiredArgsConstructor;
+import mm.app.auth.classes.SignUpDTO;
 import mm.app.auth.classes.UserCredentialsDTO;
 import mm.app.auth.classes.UserDTO;
 import mm.app.auth.entities.UserEntity;
@@ -11,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.parser.Entity;
 import java.nio.CharBuffer;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,5 +33,20 @@ public class UserService {
         } else {
             throw new UserValidationException("Password incorrect", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    public UserDTO registerNewUser(SignUpDTO signUpData) {
+        Optional<UserEntity> oUser = userRepository.findUserByLogin(signUpData.login());
+
+        if (oUser.isPresent()) {
+            throw new UserValidationException("User with login: " + signUpData.login() + " exists ",
+                    HttpStatus.BAD_REQUEST);
+        }
+        UserEntity user = userMapper.convertSignUpToUser(signUpData);
+
+        user.setPassword(passwordEncoder.encode(CharBuffer.wrap(signUpData.password())));
+        userRepository.save(user);
+
+        return userMapper.convertToUserDTO(user);
     }
 }
