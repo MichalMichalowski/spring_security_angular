@@ -3,9 +3,17 @@
         <p class="col-4">Authentication with JWT</p>
         <p class="col-4">Log in to see content</p>
         <div class="col-4">
-            <button class="btn btn-lg btn-outline-primary" (click)="open()">Log in</button>
+            <div class="row">
+                <div class="col-6">
+                    <button class="btn btn-lg btn-outline-primary" (click)="openLogIn()">Log in</button>
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-lg btn-outline-primary" (click)="openSignUp()">Sign up</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <app-login #login_modal (outLoginData)="receiveLoginData($event)"></app-login>
+<app-signup #signup_modal (outSignUpData)="receiveSignUpData($event)"></app-signup>

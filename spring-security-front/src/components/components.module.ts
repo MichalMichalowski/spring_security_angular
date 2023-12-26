@@ -4,13 +4,15 @@ import { ExampleAuthComponent } from './example-auth/example-auth.component';
 import { LoginComponent } from './login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SignupComponent } from './signup/signup.component';
 
 
 
 @NgModule({
   declarations: [
     ExampleAuthComponent,
-    LoginComponent
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     CommonModule,
