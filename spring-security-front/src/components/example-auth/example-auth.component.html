@@ -14,6 +14,7 @@
         </div>
     </div>
 </div>
-
+<button class="btn btn-lg btn-outline-primary" (click)="testAuthorization()">Test authorization</button>
+<button class="btn btn-lg btn-outline-primary" (click)="showToken()">Token</button>
 <app-login #login_modal (outLoginData)="receiveLoginData($event)"></app-login>
 <app-signup #signup_modal (outSignUpData)="receiveSignUpData($event)"></app-signup>

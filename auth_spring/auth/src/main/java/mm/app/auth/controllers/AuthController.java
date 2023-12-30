@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import mm.app.auth.classes.SignUpDTO;
 import mm.app.auth.classes.UserCredentialsDTO;
 import mm.app.auth.classes.UserDTO;
+import mm.app.auth.configuration.UserAuthenticationProvider;
 import mm.app.auth.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,10 +20,12 @@ import java.net.URI;
 public class AuthController {
 
     private final UserService userService;
+    private final UserAuthenticationProvider userAuthenticationProvider;
 
     @PostMapping("login")
     public ResponseEntity<UserDTO> loginToApp(@RequestBody UserCredentialsDTO credentials) {
         UserDTO user = userService.login(credentials);
+        user.setToken(userAuthenticationProvider.createSecurityTokenForUser(user));
         return ResponseEntity.ok(user);
     }
 
